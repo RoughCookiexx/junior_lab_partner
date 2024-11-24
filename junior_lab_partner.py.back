@@ -1,0 +1,58 @@
+import pyautogui
+import pyperclip
+import chatgpt
+from openai import OpenAI
+from secrets import CHAT_GPT_API_KEY
+
+client = OpenAI(api_key=CHAT_GPT_API_KEY)
+
+class JuniorLabPartner:
+    def __init__(self):
+        pass
+
+
+def refactor():
+    select_all()
+    current_slop = copy()
+    refined_software = chatgpt.send_message_to_chatgpt(current_slop, client)
+    string_to_clipboard(refined_software)
+    paste()
+
+
+def copy():
+    try:
+        pyautogui.hotkey('ctrl', 'c')  # Simulates pressing Ctrl+C
+        print("String copied to clipboard. Go paste it somewhere and amaze yourself.")
+        return clipboard_to_string()
+
+    except Exception as e:
+        print(f"Wow, something broke. Shocker: {e}")
+
+
+def paste():
+    try:
+        print("Pasting clipboard contents. Make sure you're focused on the right window!")
+        pyautogui.hotkey('ctrl', 'v')  # Simulates pressing Ctrl+V
+    except Exception as e:
+        print(f"Failed to paste. Maybe try using your actual hands? Error: {e}")
+
+
+def clipboard_to_string():
+    try:
+        clipboard_content = pyperclip.paste()
+        print("Clipboard contents successfully retrieved. Here it is (try not to cry):")
+        return clipboard_content
+    except Exception as e:
+        print(f"Oops, something went wrong: {e}")
+        return ""
+
+def string_to_clipboard(text):
+    try:
+        pyperclip.copy(text)
+        print("String copied to clipboard. Go paste it somewhere and amaze yourself.")
+    except Exception as e:
+        print(f"Wow, something broke. Shocker: {e}")
+
+def select_all():
+    print("Selecting all text in the active window. Hopefully, you're focused on the right thing!")
+    pyautogui.hotkey('ctrl', 'a')  # Simulates pressing Ctrl+A
