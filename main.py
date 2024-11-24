@@ -7,7 +7,7 @@ def your_task():
 
 
 def main():
-    interval = 10  # * 60
+    interval = 5 #* 60
     try:
         time.sleep(interval)
         while True:
