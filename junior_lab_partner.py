@@ -17,19 +17,19 @@ alert_sounds = [
 ]
 
 
-def refactor():
+def refactor(project_path):
     alert_sound = random.choice(alert_sounds)
     alert_sound.play()
-    py_files = read_all_py_files()
+    py_files = read_all_py_files(project_path)
     for file, current_slop in py_files.items():
         refined_software = chatgpt.send_message_to_chatgpt(current_slop, client)
         with open(file, "w") as f:
             f.write(refined_software)
 
 
-def read_all_py_files():
+def read_all_py_files(project_path):
     py_contents = {}
-    for file in os.listdir('.'):
+    for file in os.listdir(project_path):
         if file.endswith(".py") and not file == 'secrets.py':
             file_path = os.path.join('.', file)
             with open(file_path, "r") as f:
