@@ -1,4 +1,7 @@
 import time
+
+import pygame
+
 import junior_lab_partner
 
 
@@ -7,21 +10,34 @@ def your_task():
 
 
 def main(project_path):
-    interval = 5 #* 60
+    interval = 5 * 60
+    screen = pygame.display.set_mode((800, 600))
+    pygame.display.set_caption("Junior Lab Partner")
+    pygame.font.init()
+    font = pygame.font.Font(None, 256)
+    clock = pygame.time.Clock()
     try:
-        time.sleep(interval)
+        start_time = time.time()
         while True:
-            start_time = time.time()
-
-            junior_lab_partner.refactor(project_path)
-
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    raise KeyboardInterrupt
+                # Add focus check if necessary
+                if event.type == pygame.ACTIVEEVENT:
+                    if event.gain == 0:  # Lost focus
+                        print("Window lost focus, continuing...")
             elapsed = time.time() - start_time
-            sleep_time = max(0, interval - elapsed)
-            if sleep_time > 0:
-                print(f"Waiting {sleep_time:.2f} seconds to stay on schedule...")
-                time.sleep(sleep_time)
-            else:
-                print("Task took too long. Running late, just like you probably are.")
+
+            minutes, seconds = divmod(interval - elapsed, 60)
+            formatted_time = f"{int(minutes)}:{int(seconds):02}"
+            text = font.render(formatted_time, True, (255, 255, 255))
+            screen.fill((0, 255, 0))
+            screen.blit(text, (100, 100))
+            pygame.display.flip()
+            if elapsed > interval:
+                junior_lab_partner.refactor(project_path)
+                start_time = time.time()
+            clock.tick(60)
     except KeyboardInterrupt:
         print("\nOkay, fine. You win. Program terminated.")
 
