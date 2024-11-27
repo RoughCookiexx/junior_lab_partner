@@ -43,4 +43,4 @@ def main(project_path):
 
 
 if __name__ == '__main__':
-    main('.')
+    main('C:\\Users\\Tommy\\PycharmProjects\\breakout-vs-chatgpt')
